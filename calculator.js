@@ -1,6 +1,4 @@
 <script type="text/javascript">
-// -->
-
   // ALL THE EDITABLE VARIABLES SPECIFIC TO THE AC TO INITIATE 
   // OR RESET THE FIELDS TO DEFAULT VALUES FOLLOW: *************
   // This data comes from AC current W & B records and
@@ -64,8 +62,8 @@ function initWB() {
 }
 
 function WB_Plot(weight, arm) {
-   /* This function/style origin --> credit David Williams page:
-   http://www.dmjwilliams.co.uk/gbsep_weight_balance.htm   */
+  /* This function/style origin --> credit David Williams page:
+  http://www.dmjwilliams.co.uk/gbsep_weight_balance.htm */
 
   x = Math.round(x_lowpx + (arm - x_low) * x_pxpin) - bugd/2;
   y = y_lowpx - Math.round(((weight - y_low) / (y_high - y_low)) * (y_lowpx - y_highpx)) - bugd/2;
