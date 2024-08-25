@@ -1,5 +1,5 @@
 <script type="text/javascript">
-<!--
+// -->
 
   // ALL THE EDITABLE VARIABLES SPECIFIC TO THE AC TO INITIATE 
   // OR RESET THE FIELDS TO DEFAULT VALUES FOLLOW: *************
@@ -10,7 +10,7 @@
   var Nnumber = "NXXXXX";
   var oilqtmax = "8";		// max oil capacity, quarts - ref.
   var fuel1galmax = "50";	// max useable fuel, gallons - ref.
-  var bagg1max = "200";	// maximum baggagge, lbs. - ref.
+  var bagg1max = "200";	// maximum baggage, lbs. - ref.
 
   // values for AC max gross weight and maneuvering speed at max gross
   maxwt = 2450;
@@ -70,9 +70,13 @@ function WB_Plot(weight, arm) {
   x = Math.round(x_lowpx + (arm - x_low) * x_pxpin) - bugd/2;
   y = y_lowpx - Math.round(((weight - y_low) / (y_high - y_low)) * (y_lowpx - y_highpx)) - bugd/2;
 
-bugImage = document.images.bugImage.style;
-	bugImage.left = x;
-	bugImage.top = y;
+  // Set the bug image source to the raw URL before positioning
+  document.images.bugImage.src = "https://raw.githubusercontent.com/jlyalls/wb-calculator/main/bug.gif";
+
+  // Now, position the bug image
+  bugImage = document.images.bugImage.style;
+  bugImage.left = x + "px";
+  bugImage.top = y + "px";
 }
 
 function doCalc() {
