@@ -62,44 +62,44 @@
         var df = document.forms[0];   // reduce clutter
 
         // Calculate oil weight and moment
-        var oilqt = parseFloat(df.oilqt.value);
+        var oilqt = parseFloat(df.oilqt.value) || 0;
         var oilw = oilqt * 1.75; // 1 quart = 1.75 pounds
         df.oilw.value = Math.round(oilw);
-        var oilarm = parseFloat(df.oilarm.value);
+        var oilarm = parseFloat(df.oilarm.value) || 0;
         var oilmom = oilw * oilarm;
         df.oilmom.value = Math.round(oilmom);
 
         // Calculate front seats moment
-        var f1w = parseFloat(df.f1w.value);
-        var f2w = parseFloat(df.f2w.value);
-        var f1arm = parseFloat(df.f1arm.value);
+        var f1w = parseFloat(df.f1w.value) || 0;
+        var f2w = parseFloat(df.f2w.value) || 0;
+        var f1arm = parseFloat(df.f1arm.value) || 0;
         var f1mom = (f1w * f1arm) + (f2w * f1arm);
         df.f1mom.value = Math.round(f1mom);
 
         // Calculate fuel weight and moment
-        var fuel1gal = parseFloat(df.fuel1gal.value);
+        var fuel1gal = parseFloat(df.fuel1gal.value) || 0;
         var fuel1w = fuel1gal * 6; // 1 gallon = 6 pounds
         df.fuel1w.value = Math.round(fuel1w);
-        var fuel1arm = parseFloat(df.fuel1arm.value);
+        var fuel1arm = parseFloat(df.fuel1arm.value) || 0;
         var fuel1mom = fuel1w * fuel1arm;
         df.fuel1mom.value = Math.round(fuel1mom);
 
         // Calculate rear seats moment
-        var r1w = parseFloat(df.r1w.value);
-        var r2w = parseFloat(df.r2w.value);
-        var r1arm = parseFloat(df.r1arm.value);
+        var r1w = parseFloat(df.r1w.value) || 0;
+        var r2w = parseFloat(df.r2w.value) || 0;
+        var r1arm = parseFloat(df.r1arm.value) || 0;
         var r1mom = (r1w * r1arm) + (r2w * r1arm);
         df.r1mom.value = Math.round(r1mom);
 
         // Calculate baggage moment
-        var bag1w = parseFloat(df.bag1w.value);
-        var bag1arm = parseFloat(df.bag1arm.value);
+        var bag1w = parseFloat(df.bag1w.value) || 0;
+        var bag1arm = parseFloat(df.bag1arm.value) || 0;
         var bag1mom = bag1w * bag1arm;
         df.bag1mom.value = Math.round(bag1mom);
 
         // Calculate total weight and moment
-        var ew = parseFloat(df.ew.value);
-        var ewarm = parseFloat(df.ewarm.value);
+        var ew = parseFloat(df.ew.value) || 0;
+        var ewarm = parseFloat(df.ewarm.value) || 0;
         var ewmom = ew * ewarm;
         df.ewmom.value = Math.round(ewmom);
 
