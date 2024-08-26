@@ -19,7 +19,7 @@
 
         // Oil - Quarts field is now editable
         df.oilqt.value = 8;           // Default quarts
-        df.oilarm.value = 27.5;       // Arm stays the same
+        df.oilarm.value = 32.53;      // Arm stays fixed at 32.53 inches
 
         // Clear other weight and moment fields
         df.oilw.value = "";
@@ -76,10 +76,19 @@
 
         // Calculate oil weight and moment
         var oilqt = parseFloat(df.oilqt.value) || 0;
-        var oilw = oilqt * 1.75; // 1 quart = 1.75 pounds
+        var oilarm = parseFloat(df.oilarm.value) || 32.53;
+
+        if (oilqt === 8) {
+            // Special case for 8 quarts
+            var oilw = 15;            // Fixed weight for 8 quarts
+            var oilmom = 488;         // Fixed moment for 8 quarts
+        } else {
+            // Normal calculation for other quarts
+            var oilw = oilqt * (15 / 8); // Proportional weight calculation
+            var oilmom = oilw * oilarm;  // Calculate moment using fixed arm
+        }
+
         df.oilw.value = Math.round(oilw);
-        var oilarm = parseFloat(df.oilarm.value) || 0;
-        var oilmom = oilw * oilarm;
         df.oilmom.value = Math.round(oilmom);
 
         // Calculate front seats moment
