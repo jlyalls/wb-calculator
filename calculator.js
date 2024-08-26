@@ -1,18 +1,13 @@
 <script type="text/javascript">
-    // ALL THE EDITABLE VARIABLES SPECIFIC TO THE AC TO INITIATE 
-    // OR RESET THE FIELDS TO DEFAULT VALUES FOLLOW: *************
-    // This data comes from AC current W & B records and
-    // Airplane Flight Manual/'POH' or Type Certificate Data Sheet.
-
     var ACmodel = "Piper PA-28-180";
     var Nnumber = "NXXXXX";
-    var oilqtmax = "8";        // max oil capacity, quarts - ref.
-    var fuel1galmax = "50";    // max useable fuel, gallons - ref.
-    var bagg1max = "200";      // maximum baggage, lbs. - ref.
+    var oilqtmax = 8;        // max oil capacity, quarts
+    var fuel1galmax = 50;     // max usable fuel, gallons
+    var bagg1max = 200;       // maximum baggage, lbs.
 
     // values for AC max gross weight and maneuvering speed at max gross
-    maxwt = 2450;
-    Vam = 110;            // kts
+    var maxwt = 2450;
+    var Vam = 110;            // kts
 
     function initWB() {
         var df = document.forms[0];  // reduce clutter
@@ -37,37 +32,28 @@
         df.bag1w.value = 49;    // baggage
         df.bag1arm.value = 142.8;
 
-        // *************** END AIRCRAFT DEFAULT VALUES ****************
-        // Make a GIF for the load limits chart and 
-        // *************** CALIBRATE X AND Y FOR GIF HERE ***************
-
-        bugd = 32;            // bug GIF diameter
-
-        x_low = 81.0;            // (left) x min. axis, inches
-        x_lowpx = 49;            // (left) x min. axis distance from GIF left origin, pixels
-        x_high = 94.0;            // (right) x max. axis, inches
-        x_highpx = 452;        // (right) x max. axis distance from GIF left origin, pixels
-        x_pxpin = (x_highpx - x_lowpx) / (x_high - x_low);   // px/in. cal. factor
-
-        y_low = 1400;            // (bottom) y min. axis, pounds
-        y_lowpx = 232;        // (bottom) y min. axis distance from GIF top origin, pixels
-        y_high = 2500;        // (top) y max. axis, pounds
-        y_highpx = 1;            // (top) y max. axis distance from GIF top origin, pixels
-        
-        // ******************** END EDITABLE VALUES *********************
-
-        doCalc();
+        doCalc(); // Perform the calculation on load
     }
 
     function WB_Plot(weight, arm) {
-        x = Math.round(x_lowpx + (arm - x_low) * x_pxpin) - bugd/2;
-        y = y_lowpx - Math.round(((weight - y_low) / (y_high - y_low)) * (y_lowpx - y_highpx)) - bugd/2;
+        var bugd = 32; // Diameter of the bug
 
-        // Set the bug image source to the raw URL before positioning
-        document.images.bugImage.src = "https://raw.githubusercontent.com/jlyalls/wb-calculator/main/bug.gif";
+        // X and Y axis calibration for the bug position
+        var x_low = 81.0;
+        var x_lowpx = 49;
+        var x_high = 94.0;
+        var x_highpx = 452;
+        var x_pxpin = (x_highpx - x_lowpx) / (x_high - x_low);
 
-        // Now, position the bug image
-        bugImage = document.images.bugImage.style;
+        var y_low = 1400;
+        var y_lowpx = 232;
+        var y_high = 2500;
+        var y_highpx = 1;
+
+        var x = Math.round(x_lowpx + (arm - x_low) * x_pxpin) - bugd/2;
+        var y = y_lowpx - Math.round(((weight - y_low) / (y_high - y_low)) * (y_lowpx - y_highpx)) - bugd/2;
+
+        var bugImage = document.images.bugImage.style;
         bugImage.left = x + "px";
         bugImage.top = y + "px";
     }
@@ -76,48 +62,48 @@
         var df = document.forms[0];   // reduce clutter
 
         // Calculate oil weight and moment
-        var oilqt = df.oilqt.value;
-        var oilw = oilqt * 1.75; // 1 quart = 1.75 pounds (7 lb/gal, 4 qt/gal)
+        var oilqt = parseFloat(df.oilqt.value);
+        var oilw = oilqt * 1.75; // 1 quart = 1.75 pounds
         df.oilw.value = Math.round(oilw);
-        var oilarm = df.oilarm.value;
+        var oilarm = parseFloat(df.oilarm.value);
         var oilmom = oilw * oilarm;
         df.oilmom.value = Math.round(oilmom);
 
         // Calculate front seats moment
-        var f1w = df.f1w.value;
-        var f2w = df.f2w.value;
-        var f1arm = df.f1arm.value;
-        var f1mom = f1w * f1arm + f2w * f1arm; // Combine both front seats
+        var f1w = parseFloat(df.f1w.value);
+        var f2w = parseFloat(df.f2w.value);
+        var f1arm = parseFloat(df.f1arm.value);
+        var f1mom = (f1w * f1arm) + (f2w * f1arm);
         df.f1mom.value = Math.round(f1mom);
 
         // Calculate fuel weight and moment
-        var fuel1gal = df.fuel1gal.value;
+        var fuel1gal = parseFloat(df.fuel1gal.value);
         var fuel1w = fuel1gal * 6; // 1 gallon = 6 pounds
         df.fuel1w.value = Math.round(fuel1w);
-        var fuel1arm = df.fuel1arm.value;
+        var fuel1arm = parseFloat(df.fuel1arm.value);
         var fuel1mom = fuel1w * fuel1arm;
         df.fuel1mom.value = Math.round(fuel1mom);
 
         // Calculate rear seats moment
-        var r1w = df.r1w.value;
-        var r2w = df.r2w.value;
-        var r1arm = df.r1arm.value;
-        var r1mom = r1w * r1arm + r2w * r1arm; // Combine both rear seats
+        var r1w = parseFloat(df.r1w.value);
+        var r2w = parseFloat(df.r2w.value);
+        var r1arm = parseFloat(df.r1arm.value);
+        var r1mom = (r1w * r1arm) + (r2w * r1arm);
         df.r1mom.value = Math.round(r1mom);
 
         // Calculate baggage moment
-        var bag1w = df.bag1w.value;
-        var bag1arm = df.bag1arm.value;
+        var bag1w = parseFloat(df.bag1w.value);
+        var bag1arm = parseFloat(df.bag1arm.value);
         var bag1mom = bag1w * bag1arm;
         df.bag1mom.value = Math.round(bag1mom);
 
         // Calculate total weight and moment
-        var ew = df.ew.value;
-        var ewarm = df.ewarm.value;
+        var ew = parseFloat(df.ew.value);
+        var ewarm = parseFloat(df.ewarm.value);
         var ewmom = ew * ewarm;
         df.ewmom.value = Math.round(ewmom);
 
-        var totwt = parseFloat(ew) + parseFloat(oilw) + parseFloat(f1w) + parseFloat(f2w) + parseFloat(fuel1w) + parseFloat(r1w) + parseFloat(r2w) + parseFloat(bag1w);
+        var totwt = ew + oilw + f1w + f2w + fuel1w + r1w + r2w + bag1w;
         df.totwt.value = Math.round(totwt);
 
         var totmom = ewmom + oilmom + f1mom + fuel1mom + r1mom + bag1mom;
@@ -133,9 +119,5 @@
 
         // Position the bug on the graph
         WB_Plot(df.totwt.value, df.totarm.value);
-    }
-
-    function popwindow(theURL, winName, features) {
-        window.open(theURL, winName, features);
     }
 </script>
